@@ -1,3 +1,5 @@
+package data;
+
 public class Position {
 
     private int x;
@@ -9,6 +11,5 @@ public class Position {
         this.y = y;
         this.facing = facing;
     }
-
 
 }

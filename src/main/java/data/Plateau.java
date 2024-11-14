@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package data;
 
 public class Plateau {
 
@@ -26,7 +26,7 @@ public class Plateau {
         return plateau;
     }
 
-
+    //TODO - breaks single responsibility principle, move into separate UI class which calls getPlateau()
     @Override
     public String toString() {
 
