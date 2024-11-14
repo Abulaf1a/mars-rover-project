@@ -1,6 +1,7 @@
 package input;
 
 import data.Direction;
+import data.Instruction;
 import data.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -130,10 +131,8 @@ class InputParserTest {
         //Arrange
         InputParser inputParser = new InputParser();
 
-
         //Act
         var position = inputParser.getRoverStartPosition("23 22 E");
-
         Position expected = new Position(23, 22, Direction.E);
 
         //Assert
@@ -150,7 +149,6 @@ class InputParserTest {
     void getRoverStartPosition_testMultiDigitDifferentLengths(){
         //Arrange
         InputParser inputParser = new InputParser();
-
         Position expected = new Position(23, 2, Direction.E);
 
         //Act
@@ -206,9 +204,108 @@ class InputParserTest {
     @Test
     @DisplayName("Tests whether the getInstruction method returns an array of instructions given an input string of " +
             "valid characters ('L', 'R', and 'M')")
-    void getInstruction_testReturnsInstructionArrayGivenExpectedInput() {
+    void getInstructions_testReturnsInstructionArrayGivenExpectedInput() {
+        //Arrange
+        InputParser inputParser = new InputParser();
+        Instruction[] actual;
+        Instruction[] expected = new Instruction[]{
+                Instruction.L,
+                Instruction.R,
+                Instruction.M,
+                Instruction.M,
+                Instruction.R,
+                Instruction.M
+        };
+        String input = "LRMMRM";
 
+        //Act
+        actual = inputParser.getInstructions(input);
 
-
+        //Assert
+        assertArrayEquals(expected,actual);
     }
+
+    @Test
+    @DisplayName("Tests whether the getInstruction method returns an array of instructions given an input string of " +
+            "valid characters ('L', 'R', and 'M'), single input")
+    void getInstructions_testReturnsInstructionArrayGivenSingleExpectedInput() {
+        //Arrange
+        InputParser inputParser = new InputParser();
+        Instruction[] actual;
+        Instruction[] expected = new Instruction[]{
+                Instruction.L
+        };
+        String input = "L";
+
+        //Act
+        actual = inputParser.getInstructions(input);
+
+        //Assert
+        assertArrayEquals(expected,actual);
+    }
+
+    @Test
+    @DisplayName("Tests whether the getInstruction method allows invalid characters as long as some valid characters are in string")
+    void getInstructions_testReturnsInstructionArrayGivenMixedValidAndInvalidInput() {
+        //Arrange
+        InputParser inputParser = new InputParser();
+        Instruction[] actual;
+        Instruction[] expected = new Instruction[]{
+                Instruction.L,
+                Instruction.R,
+                Instruction.M,
+                Instruction.M
+        };
+        String input = "LRMXt4X2m";
+
+        //Act
+        actual = inputParser.getInstructions(input);
+
+        //Assert
+        assertArrayEquals(expected,actual);
+    }
+
+    @Test
+    @DisplayName("Tests whether the getInstruction method returns correct exception (InputMisMatchException)" +
+            "if no valid characters are found in the input string")
+    void getInstructions_testReturnsExceptionGivenInvalidInput() {
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+        String input = "DC4eS[";
+
+        //Act
+        try{
+            inputParser.getInstructions(input);
+        }
+        catch(InputMismatchException e){
+
+            //Assert
+            assertEquals("No valid input, please re-enter movement instructions" +
+                    "valid characters are: L, R, M", e.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("Tests whether the getInstruction method returns correct exception (InputMisMatchException)" +
+            "given empty string input")
+    void getInstructions_testReturnsExceptionGivenEmptyInput() {
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+        String input = "";
+
+        //Act
+        try{
+            inputParser.getInstructions(input);
+        }
+        catch(InputMismatchException e){
+
+            //Assert
+            assertEquals("No valid input, please re-enter movement instructions" +
+                    "valid characters are: L, R, M", e.getMessage());
+        }
+    }
+
+
 }
