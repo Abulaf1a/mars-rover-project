@@ -4,14 +4,13 @@ public class Plateau {
 
     private int x;
     private int y;
-    private int[][] plateau;
-
+    private char[][] plateau;
 
 
     public Plateau(int x, int y) {
         this.x = x;
         this.y = y;
-        plateau = new int[x][y];
+        plateau = new char[x][y];
     }
 
     public int getX() {
@@ -22,11 +21,11 @@ public class Plateau {
         return y;
     }
 
-    public int[][] getPlateau(){
+    public char[][] getPlateau(){
         return plateau;
     }
 
-    //TODO - breaks single responsibility principle, move into separate UI class which calls getPlateau()
+    //Unused except in test functionality has been moved to controller class.
     @Override
     public String toString() {
 
@@ -40,5 +39,9 @@ public class Plateau {
         }
         return plateauDisplay.toString();
 
+    }
+
+    public boolean isValidPosition(Position position){
+        return(position.getY() <= y && position.getX() <= x);
     }
 }
