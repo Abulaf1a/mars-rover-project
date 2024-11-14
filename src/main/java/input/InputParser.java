@@ -4,6 +4,7 @@ import data.Direction;
 import data.Instruction;
 import data.Position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.regex.Matcher;
@@ -41,7 +42,6 @@ public class InputParser {
 
     //example input "1 2 N"
     public Position getRoverStartPosition(String input) throws InputMismatchException{
-
         int x;
         int y;
         Direction facing = Direction.N;
@@ -84,11 +84,37 @@ public class InputParser {
 
 
     //example input "LMLMMLLMMMR"
-    public Instruction[] getInstruction(String input){
+    public Instruction[] getInstructions(String input) throws InputMismatchException{
 
+        ArrayList<Instruction> instructions = new ArrayList<>();
 
-        return new Instruction[]{Instruction.L};
+        input = input.toUpperCase();
+        for (int i = 0; i < input.length(); i++) {
 
+            switch (input.charAt(i)){
+
+                case 'L':
+                    instructions.add(Instruction.L);
+                    break;
+
+                case 'R':
+                    instructions.add(Instruction.R);
+                    break;
+
+                case 'M':
+                    instructions.add(Instruction.M);
+                    break;
+            }
+
+        }
+
+        if(!instructions.isEmpty()){
+            return instructions.toArray(new Instruction[0]);
+        }
+        else{
+            throw new InputMismatchException("No valid input, please re-enter movement instructions" +
+                    "valid characters are: L, R, M");
+        }
 
     }
 
