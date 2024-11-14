@@ -30,10 +30,10 @@ public class Position {
         Position tempPosition = new Position(x, y, facing);
 
         switch(facing){
-            case N -> tempPosition.x--;
-            case E -> tempPosition.y++;
-            case S -> tempPosition.x++;
-            case W -> tempPosition.y--;
+            case N -> tempPosition.y++;
+            case E -> tempPosition.x++;
+            case S -> tempPosition.y--;
+            case W -> tempPosition.x--;
         }
         return tempPosition;
 

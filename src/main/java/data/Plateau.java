@@ -30,14 +30,15 @@ public class Plateau {
     public String toString() {
 
         StringBuilder plateauDisplay = new StringBuilder();
-        for (int i = 0; i < plateau.length; i++) {
-            for (int j = 0; j < plateau[i].length; j++) {
+        for (int i = y; i > 0; i--) { // y axis
+            for (int j = 0; j < x; j++) {
 
-                plateauDisplay.append(plateau[i][j]);
+                plateauDisplay.append(plateau[j][i]); //i = y, j = x
             }
             plateauDisplay.append("\n");
         }
         return plateauDisplay.toString();
+
 
     }
 
