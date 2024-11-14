@@ -1,5 +1,7 @@
 package input;
 
+import data.Direction;
+import data.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -98,8 +100,123 @@ class InputParserTest {
 
 
     @Test
-    void getRoverStartPosition() {
+    @DisplayName("Tests whether the Input Parser getRoverStartPosition method returns a new Position object with the expected values" +
+            " this is a typical input")
+    void getRoverStartPosition_testExpectedInput() {
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+        //Act
+        try{
+            Position position = inputParser.getRoverStartPosition("0 0 N");
+
+            //Assert
+            assertEquals(new Position(0, 0, Direction.N), position);
+
+        } catch (InputMismatchException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
+    @Test
+    @DisplayName("Tests whether the Input Parser getRoverStartPosition method " +
+            "returns a position object given multi-digit x and y coordinates" +
+            " this is a typical input")
+    void getRoverStartPosition_testMultiDigit(){
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+
+        //Act
+        Position position = inputParser.getRoverStartPosition("23 22 E");
+
+
+        //Assert
+        assertEquals(new Position(23, 22, Direction.E), position);
+
+    }
+
+    @Test
+    @DisplayName("Tests whether the Input Parser getRoverStartPosition method " +
+            "returns a position object given different length x and y coordinates" +
+            " this is a typical input")
+    void getRoverStartPosition_testMultiDigitDifferentLengths(){
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+
+        //Act
+        Position position = inputParser.getRoverStartPosition("23 2 E");
+
+
+        //Assert
+        assertEquals(new Position(23, 2, Direction.E), position);
+
+    }
+
+    @Test
+    @DisplayName("Tests whether the Input Parser getRoverStartPosition method " +
+            "throws an error when given an empty input")
+    void getRoverStartPosition_testEmptyInputThrowsError(){
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+
+        //Act
+        try{
+            Position position = inputParser.getRoverStartPosition("");
+        }
+        catch (InputMismatchException e) {
+
+            //Assert
+            assertEquals("Please re-enter initial position in the following format: X Y D, for example 0 1 N", e.getMessage());
+        }
+
+    }
+
+    @Test
+    @DisplayName("Tests whether the Input Parser getRoverStartPosition method " +
+            "throws an error when given an input that doesn't conform to expected format " +
+            "(non-existant direction 'X')")
+    void getRoverStartPosition_throwsErrorWithNonExistentDirection(){
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+
+        //Act
+        try{
+            Position position = inputParser.getRoverStartPosition("23 2 X");
+        } catch (InputMismatchException e) {
+
+            //Assert
+            assertEquals("Please re-enter initial position in the following format: X Y D, for example 0 1 N", e.getMessage());
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Test
     void getInstruction() {
