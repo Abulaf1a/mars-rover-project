@@ -40,16 +40,52 @@ public class InputParser {
 
 
     //example input "1 2 N"
-    public Position getRoverStartPosition(String input) {
+    public Position getRoverStartPosition(String input) throws InputMismatchException{
 
+        int x;
+        int y;
+        Direction facing = Direction.N;
 
+        //doesn't deal with positions outside the Plateau - SRP
+        Pattern pattern = Pattern.compile("^([0-9]+) ([0-9]+) [N|E|S|W]$");
 
-        return new Position(0,0, Direction.N);
+        Matcher matcher = pattern.matcher(input);
+
+        if(matcher.matches()){
+
+            String[] inputArr = input.split(" ");
+
+            x = Integer.valueOf(inputArr[0]);
+
+            y = Integer.valueOf(inputArr[1]);
+
+            switch (inputArr[2]) {
+                case "N":
+                    facing = Direction.N;
+                    break;
+                case "S":
+                    facing = Direction.S;
+                    break;
+
+                case "E":
+                    facing = Direction.E;
+                    break;
+
+                case "W":
+                    facing = Direction.W;
+                    break;
+            }
+            return new Position(x, y, facing);
+        }
+        else{
+            throw new InputMismatchException("Please re-enter initial position in the following format: X Y D, for example 0 1 N");
+        }
     }
 
 
     //example input "LMLMMLLMMMR"
     public Instruction[] getInstruction(String input){
+
 
         return new Instruction[]{Instruction.L};
 
