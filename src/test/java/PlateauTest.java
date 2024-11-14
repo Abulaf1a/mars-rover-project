@@ -7,7 +7,7 @@ class PlateauTest {
     }
 
     @org.junit.jupiter.api.Test
-    void printPlateau_testExpectedInput() {
+    void toString_testExpectedInput() {
         //Arrange
         Plateau plateau = new Plateau(5,5);
 
