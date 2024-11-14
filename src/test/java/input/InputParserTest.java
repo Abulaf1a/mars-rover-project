@@ -105,13 +105,16 @@ class InputParserTest {
     void getRoverStartPosition_testExpectedInput() {
         //Arrange
         InputParser inputParser = new InputParser();
+        Position expected = new Position(0,0,Direction.N);
 
         //Act
         try{
             Position position = inputParser.getRoverStartPosition("0 0 N");
 
             //Assert
-            assertEquals(new Position(0, 0, Direction.N), position);
+            assertEquals(expected.getX(), position.getX());
+            assertEquals(expected.getY(), position.getY());
+            assertEquals(expected.getFacing(), position.getFacing());
 
         } catch (InputMismatchException e) {
             throw new RuntimeException(e);
@@ -129,11 +132,14 @@ class InputParserTest {
 
 
         //Act
-        Position position = inputParser.getRoverStartPosition("23 22 E");
+        var position = inputParser.getRoverStartPosition("23 22 E");
 
+        Position expected = new Position(23, 22, Direction.E);
 
         //Assert
-        assertEquals(new Position(23, 22, Direction.E), position);
+        assertEquals(expected.getX(), position.getX());
+        assertEquals(expected.getY(), position.getY());
+        assertEquals(expected.getFacing(), position.getFacing());
 
     }
 
@@ -145,13 +151,16 @@ class InputParserTest {
         //Arrange
         InputParser inputParser = new InputParser();
 
+        Position expected = new Position(23, 2, Direction.E);
 
         //Act
         Position position = inputParser.getRoverStartPosition("23 2 E");
 
 
         //Assert
-        assertEquals(new Position(23, 2, Direction.E), position);
+        assertEquals(expected.getX(), position.getX());
+        assertEquals(expected.getY(), position.getY());
+        assertEquals(expected.getFacing(), position.getFacing());
 
     }
 
@@ -183,7 +192,6 @@ class InputParserTest {
         //Arrange
         InputParser inputParser = new InputParser();
 
-
         //Act
         try{
             Position position = inputParser.getRoverStartPosition("23 2 X");
@@ -195,30 +203,12 @@ class InputParserTest {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Test
-    void getInstruction() {
+    @DisplayName("Tests whether the getInstruction method returns an array of instructions given an input string of " +
+            "valid characters ('L', 'R', and 'M')")
+    void getInstruction_testReturnsInstructionArrayGivenExpectedInput() {
+
+
+
     }
 }
