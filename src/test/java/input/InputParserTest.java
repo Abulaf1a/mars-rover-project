@@ -73,7 +73,7 @@ class InputParserTest {
         } catch (Exception e) {
 
             //Assert
-            assertEquals("Please write TWO integers only", e.getMessage());
+            assertEquals("Please re-enter input in format X Y where X and Y are numbers separated by only a space", e.getMessage());
         }
 
 
@@ -94,9 +94,44 @@ class InputParserTest {
 
         } catch (Exception e){
             //Assert
-            assertEquals("Please re-enter plateau size coordinates without letters!", e.getMessage());
+            assertEquals("Please re-enter input in format X Y where X and Y are numbers separated by only a space", e.getMessage());
         }
 
+    }
+
+    @Test
+    @DisplayName("Tests the getPlateauSize method returns a plateau given a multi-digit input" +
+            "a typical input")
+    void getPlateauSize_testMultiDigitInput(){
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+        //Act
+        try{
+            int[] plateauSize = inputParser.getPlateauSize("10 10");
+
+            //Assert
+            assertArrayEquals(new int[]{10,10}, plateauSize);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @DisplayName("Tests the getPlateauSize method throws an error given a negative input")
+    void getPlateauSize_testNegativeInput(){
+        //Arrange
+        InputParser inputParser = new InputParser();
+
+        //Act
+        try{
+            inputParser.getPlateauSize("-5 -5");
+
+        } catch (Exception e){
+            //Assert
+            assertEquals("Please re-enter input in format X Y where X and Y are numbers separated by only a space", e.getMessage());
+
+        }
     }
 
 

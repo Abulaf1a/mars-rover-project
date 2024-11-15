@@ -10,9 +10,9 @@ class PositionTest {
     @Test
     void calculateUpdatedPosition_singleMove() {
         //Arrange
-        Position expected = new Position(3,3,Direction.N);
+        Position expected = new Position(3, 3, Direction.N);
 
-        Position currentPosition = new Position(4,3,Direction.N);
+        Position currentPosition = new Position(4, 3, Direction.N);
 
         InputParser inputParser = new InputParser();
 
