@@ -1,6 +1,6 @@
 package data;
 
-public class Position {
+public class Position implements Returnable {
 
     private int x;
     private int y;

@@ -1,5 +1,7 @@
 package data;
 
+import java.util.ArrayList;
+
 public class Controller {
 
     private Plateau plateau;
@@ -24,37 +26,14 @@ public class Controller {
         }
     }
 
-    //TODO move to a UI class as this breaks the single responsibility principle..
-    public String renderScene(){
+    public ArrayList<Returnable> returnData(){
 
-        StringBuilder sceneBuilder = new StringBuilder();
+        ArrayList<Returnable> returnables = new ArrayList<>();
 
-        String red = "\u001B[31m";
-        String background = " \u001B[43m";
-        String reset = "\u001B[0m";
+        returnables.add(plateau);
+        returnables.add(roverPosition);
 
-        for (int i = plateau.getY() -1; i > -1; i--) {
-            sceneBuilder.append(red + background);
-
-            for (int j = 0; j < plateau.getX(); j++) {
-                if(j == roverPosition.getX() && i == roverPosition.getY()){
-                    sceneBuilder.append("\u001B[30m");
-
-                    sceneBuilder.append('#');
-                    sceneBuilder.append(red);
-
-                }
-                else{
-                    sceneBuilder.append(plateau.getPlateau()[j][i]);
-                }
-            }
-            sceneBuilder.append(reset);
-            sceneBuilder.append("\n");
-
-        }
-
-        return sceneBuilder.toString();
-
+        return returnables;
     }
 
 }

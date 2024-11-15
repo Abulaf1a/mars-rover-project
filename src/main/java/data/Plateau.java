@@ -1,6 +1,6 @@
 package data;
 
-public class Plateau {
+public class Plateau implements Returnable {
 
     private int x;
     private int y;
