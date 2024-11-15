@@ -7,6 +7,7 @@ import data.Position;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -17,25 +18,22 @@ public class InputParser {
     //example input "5 5"
     public int[] getPlateauSize(String input) throws InputMismatchException, NotEqualToTwoIntegersException{
         int[] output;
-        char[] inputArr = input.toCharArray();
-        try {
-            output = new String(inputArr).chars()
-                .filter(c -> c != ' ')
-                .map(c -> c - 48)
-                .limit(2)
-                .toArray();
+
+        Pattern pattern = Pattern.compile("^([0-9]+)( )+([0-9]+)( )*$");
+        Matcher matcher = pattern.matcher(input);
+
+        if(matcher.matches()){
+            input = input.replaceAll("\\s+", " ").trim();
+
+            output = Arrays.stream(input.split(" "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+
+            return output;
         }
-
-        catch (InputMismatchException e){
-            throw new InputMismatchException("Please re-enter plateau size coordinates without letters!");
+        else{
+            throw new InputMismatchException("Please re-enter input in format X Y where X and Y are numbers separated by only a space");
         }
-
-        if(output.length != 2){
-            throw new NotEqualToTwoIntegersException("Please write TWO integers only");
-        }
-
-        return output;
-
 
     }
 
@@ -59,22 +57,13 @@ public class InputParser {
 
             y = Integer.valueOf(inputArr[1]);
 
-            switch (inputArr[2]) {
-                case "N":
-                    facing = Direction.N;
-                    break;
-                case "S":
-                    facing = Direction.S;
-                    break;
-
-                case "E":
-                    facing = Direction.E;
-                    break;
-
-                case "W":
-                    facing = Direction.W;
-                    break;
-            }
+            facing = switch (inputArr[2]) {
+                case "N" -> Direction.N;
+                case "S" -> Direction.S;
+                case "E" -> Direction.E;
+                case "W" -> Direction.W;
+                default -> throw new InputMismatchException("Please enter a cardinal direction N E S W");
+            };
             return new Position(x, y, facing);
         }
         else{

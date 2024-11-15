@@ -6,7 +6,6 @@ public class Plateau {
     private int y;
     private char[][] plateau;
 
-
     public Plateau(int x, int y) {
         this.x = x;
         this.y = y;
@@ -38,7 +37,6 @@ public class Plateau {
             plateauDisplay.append("\n");
         }
         return plateauDisplay.toString();
-
 
     }
 

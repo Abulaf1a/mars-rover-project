@@ -16,12 +16,10 @@ public class Position {
         /*this position has not yet been checked by the plateau class for obstacles or falling off the edge of the map
         this logic calculates the new position, the controller then passes that position to the plateau,
         which returns whether the new position is valid, only then is this position updated with the new position calculated here.*/
-        Position uncheckedUpdatePosition = new Position(0,0,Direction.N);
-        switch (instruction){
-            case M -> uncheckedUpdatePosition = calculateMovePosition();
-            case L -> uncheckedUpdatePosition = calculateRotatePosition(Instruction.L);
-            case R -> uncheckedUpdatePosition = calculateRotatePosition(Instruction.R);
-        }
+        Position uncheckedUpdatePosition;
+
+        if(instruction.equals(Instruction.M)) uncheckedUpdatePosition = calculateMovePosition();
+        else uncheckedUpdatePosition = calculateRotatePosition(instruction);
 
         return uncheckedUpdatePosition;
     }
@@ -56,6 +54,7 @@ public class Position {
                 '}';
     }
 
+    //getters solely for test classes
     public int getX() {
         return x;
     }
@@ -67,7 +66,5 @@ public class Position {
     public Direction getFacing() {
         return facing;
     }
-
-
 
 }
