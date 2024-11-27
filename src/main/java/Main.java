@@ -1,65 +1,41 @@
-import data.Controller;
-import data.Direction;
-import data.Instruction;
-import data.Position;
-import input.InputParser;
-import input.NotEqualToTwoIntegersException;
+import data.*;
+import logic.Controller;
+import userinterface.UI;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
 
-        String[] testInput = new String[]{"5 5",
-                "1 2 N" ,
-                "LMLMLMLMM" ,
-                "3 3 E" ,
-                "MMRMMRMRRM"};
+        ///NOTE SEE NOTES FROM CALL WITH BELA 19/11 ON STUFF TO ADD!
+        UI ui = new UI();
 
-        InputParser inputParser = new InputParser();
 
-        try{
-            Controller controllerA = new Controller(inputParser.getPlateauSize(testInput[0]),
-                    inputParser.getRoverStartPosition(testInput[1]));
+        int[] size = ui.getPlateauSizeInput();
+        Position start = ui.getStartPosition();
+        Instruction[] instructions = ui.getInstructions();
 
-            Instruction[] instructions = inputParser.getInstructions(testInput[2]);
+        Controller controller = new Controller(size, start);
 
-            for(Instruction i : instructions){
-                controllerA.moveRover(i);
+        //game logic
+        while(true){
 
-                System.out.println(controllerA.renderScene());
+            ArrayList<Returnable> arr;
+            for(Instruction i: instructions){
+                arr = controller.returnData();
+                ui.renderScene(arr);//currently I have a situation where I can not update the UI after the controller updates.
+                controller.moveRover(i); //research how to do MVC properly - research SWING
             }
-            System.out.println("rover is at position: " + controllerA.getRoverPosition());
+            arr = controller.returnData();
+            ui.renderScene(arr);
 
+            instructions = ui.getInstructions();
 
-            Controller controllerB = new Controller(inputParser.getPlateauSize(testInput[0]),
-                    inputParser.getRoverStartPosition(testInput[3]));
+            System.out.println();
 
-            instructions = inputParser.getInstructions(testInput[4]);
-            for(Instruction i : instructions){
-                controllerB.moveRover(i);
-
-                System.out.println(controllerB.renderScene());
-            }
-
-            System.out.println("rover is at position: " + controllerB.getRoverPosition());
-
-
-
-
-        } catch (NotEqualToTwoIntegersException e) {
-            throw new RuntimeException(e);
         }
-
-
-        String red = "\u001B[31m";
-        String background = " \u001B[43m";
-        String reset = "\u001B[0m";
-        System.out.println(red + background+ " hello this is green " + reset);
-
-
     }
-
-
-
-
 }
