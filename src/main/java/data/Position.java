@@ -2,6 +2,7 @@ package data;
 
 public class Position implements Returnable {
 
+
     private int x;
     private int y;
     private Direction facing;
@@ -12,10 +13,14 @@ public class Position implements Returnable {
         this.facing = facing;
     }
 
+
+    //TODO move to rover class - this is not for position class.
+
+    /*this position has not yet been checked by the plateau class for obstacles or falling off the edge of the map
+           this logic calculates the new position, the controller then passes that position to the plateau,
+           which returns whether the new position is valid, only then is this position updated with the new position calculated here.*/
     public Position calculateUpdatedPosition(Instruction instruction){
-        /*this position has not yet been checked by the plateau class for obstacles or falling off the edge of the map
-        this logic calculates the new position, the controller then passes that position to the plateau,
-        which returns whether the new position is valid, only then is this position updated with the new position calculated here.*/
+
         Position uncheckedUpdatePosition;
 
         if(instruction.equals(Instruction.M)) uncheckedUpdatePosition = calculateMovePosition();
@@ -34,7 +39,6 @@ public class Position implements Returnable {
             case W -> tempPosition.x--;
         }
         return tempPosition;
-
     }
 
     private Position calculateRotatePosition(Instruction instruction){
@@ -63,8 +67,18 @@ public class Position implements Returnable {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
     public Direction getFacing() {
         return facing;
     }
 
+    public void setFacing(Direction facing) {
+        this.facing = facing;
+    }
 }
