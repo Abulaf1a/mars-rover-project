@@ -16,7 +16,8 @@ import java.util.stream.Stream;
 public class InputParser {
 
     //example input "5 5"
-    public int[] getPlateauSize(String input) throws InputMismatchException, NotEqualToTwoIntegersException{
+    //PlateauSize instance output here instead of int[] array.
+    public int[] getPlateauSize(String input) throws InputMismatchException{
         int[] output;
 
         Pattern pattern = Pattern.compile("^([0-9]+)( )+([0-9]+)( )*$");
@@ -37,7 +38,6 @@ public class InputParser {
 
     }
 
-
     //example input "1 2 N"
     public Position getRoverStartPosition(String input) throws InputMismatchException{
         int x;
@@ -45,7 +45,7 @@ public class InputParser {
         Direction facing = Direction.N;
 
         //doesn't deal with positions outside the Plateau - SRP
-        Pattern pattern = Pattern.compile("^([0-9]+) ([0-9]+) [N|E|S|W]$");
+        Pattern pattern = Pattern.compile("^([0-9]+) ([0-9]+) [NESW]$");
 
         Matcher matcher = pattern.matcher(input);
 
@@ -106,7 +106,5 @@ public class InputParser {
         }
 
     }
-
-
 
 }
